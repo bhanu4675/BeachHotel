@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -67,5 +68,19 @@ public class RoomServiceImpl implements RoomService {
             System.out.println("No existing room in the database");
         }
         return roomRepository.save(existingRoom);
+    }
+
+    @Override
+    public byte[] getRoomPhotoById(Long roomId) throws SQLException {
+        Optional<Room> theRoom = roomRepository.findById(roomId);
+        if(!theRoom.isPresent()){
+            //throw new ResourceNotF
+            System.out.println("No existing room in the database");
+        }
+        Blob photoBlob = theRoom.get().getPhoto();
+        if(photoBlob != null){
+            return photoBlob.getBytes(1,(int)photoBlob.length());
+        }
+        return null;
     }
 }

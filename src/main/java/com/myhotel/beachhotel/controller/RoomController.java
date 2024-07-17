@@ -10,9 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -35,17 +38,31 @@ public class RoomController {
     }
 
     @GetMapping("/all-rooms")
-    public ResponseEntity<RoomResponse> getRooms(){
+    public ResponseEntity<List<RoomResponse>> getAllRooms() throws SQLException {
         RoomResponse roomResponse = new RoomResponse();
-
+        List<RoomResponse> roomListResponse= new ArrayList<>();
         List<Room> roomsList = roomService.getAllRooms();
         if(roomsList.isEmpty()){
             roomResponse.setDescription("No Rooms found");
+
         }else{
-            roomResponse.setDescription("Rooms found : " + roomsList.size());
+            for(Room room : roomsList){
+                byte[] photoBytes = roomService.getRoomPhotoById(room.getId());
+                if(photoBytes != null || photoBytes.length > 0){
+                    String base64Photo = Base64.getEncoder().encode(photoBytes).toString();
+                    //RoomResponse roomResponse1 = getRoomResponse(room);
+                    roomResponse.setId(room.getId());
+                    roomResponse.setRoomType(room.getRoomType());
+                    roomResponse.setRoomPrice(room.getRoomPrice());
+                    roomResponse.setPhoto(base64Photo);
+                    roomListResponse.add(roomResponse);
+                }
+
+            }
+
         }
 
-        return ResponseEntity.ok((roomResponse));
+        return ResponseEntity.ok(roomListResponse);
     }
 
     @GetMapping("/room/id")

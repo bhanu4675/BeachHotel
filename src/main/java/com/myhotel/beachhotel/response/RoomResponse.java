@@ -1,5 +1,6 @@
 package com.myhotel.beachhotel.response;
 
+import com.myhotel.beachhotel.domain.Room;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +20,7 @@ public class RoomResponse {
 
     private String description;
 
+    private List<Room> rooms;
     private List<BookingResponse> boookings;
 
     public RoomResponse(Long id, String roomType, BigDecimal roomPrice) {

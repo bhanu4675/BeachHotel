@@ -21,4 +21,6 @@ public interface RoomService {
     void deleteRoom(Long id);
 
     Room updateRoom(Long id, MultipartFile photo, String roomType, BigDecimal roomPrice) throws IOException, Exception;
+
+    byte[] getRoomPhotoById(Long id) throws SQLException;
 }
