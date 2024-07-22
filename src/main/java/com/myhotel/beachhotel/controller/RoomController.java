@@ -39,14 +39,15 @@ public class RoomController {
 
     @GetMapping("/all-rooms")
     public ResponseEntity<List<RoomResponse>> getAllRooms() throws SQLException {
-        RoomResponse roomResponse = new RoomResponse();
+        RoomResponse roomResp = new RoomResponse();
         List<RoomResponse> roomListResponse= new ArrayList<>();
         List<Room> roomsList = roomService.getAllRooms();
         if(roomsList.isEmpty()){
-            roomResponse.setDescription("No Rooms found");
+            roomResp.setDescription("No Rooms found");
 
         }else{
             for(Room room : roomsList){
+                RoomResponse roomResponse = new RoomResponse();
                 byte[] photoBytes = roomService.getRoomPhotoById(room.getId());
                 if(photoBytes != null || photoBytes.length > 0){
                     String base64Photo = Base64.getEncoder().encode(photoBytes).toString();
@@ -55,22 +56,45 @@ public class RoomController {
                     roomResponse.setRoomType(room.getRoomType());
                     roomResponse.setRoomPrice(room.getRoomPrice());
                     roomResponse.setPhoto(base64Photo);
-                    roomListResponse.add(roomResponse);
-                }
 
+                }
+                roomListResponse.add(roomResponse);
             }
 
-        }
+           /* for(int i=0; i< roomsList.size(); i++) {
+                //Room room = roomService.getRoomById(roomsList.get(i).getId());
+                byte[] photoBytes = roomService.getRoomPhotoById(roomsList.get(i).getId());
+                if (photoBytes != null || photoBytes.length > 0) {
+                    String base64Photo = Base64.getEncoder().encode(photoBytes).toString();
+                    roomResponse.setId(roomsList.get(i).getId());
+                    roomResponse.setRoomType(roomsList.get(i).getRoomType());
+                    roomResponse.setRoomPrice(roomsList.get(i).getRoomPrice());
+                    roomResponse.setPhoto(base64Photo);
 
+                }
+                roomListResponse.add(roomResponse);
+            }*/
+
+        }
         return ResponseEntity.ok(roomListResponse);
     }
 
     @GetMapping("/room/id")
-    public ResponseEntity<RoomResponse> getRoomById(@RequestParam("id") Long id){
+    public ResponseEntity<RoomResponse> getRoomById(@RequestParam("id") Long id) throws SQLException {
         RoomResponse roomResponse = new RoomResponse();
         Room room = roomService.getRoomById(id);
+        byte[] photoBytes = roomService.getRoomPhotoById(room.getId());
+        String base64Photo = null;
+        if(photoBytes != null || photoBytes.length > 0){
+            base64Photo = Base64.getEncoder().encode(photoBytes).toString();
+        }
         if(room.getId().equals(id)){
             roomResponse.setDescription("Room found : " + room.getRoomType());
+            roomResponse.setRoomType(room.getRoomType());
+            roomResponse.setRoomPrice(room.getRoomPrice());
+            roomResponse.setId(room.getId());
+            roomResponse.setPhoto(base64Photo);
+
         }else{
             roomResponse.setDescription("Room not found");
         }
