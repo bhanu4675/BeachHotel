@@ -23,11 +23,26 @@ public class BookingResponse {
 
     private RoomResponse room;
 
+    private String status;
+
     public BookingResponse(Long id, LocalDate checkInDate, LocalDate checkOutDate, int numOfGuests, String bookingConfirmationCode) {
         this.id = id;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.numOfGuests = numOfGuests;
         this.bookingConfirmationCode = bookingConfirmationCode;
+    }
+
+    public BookingResponse(Long id, LocalDate checkInDate, LocalDate checkOutDate, String guestFullName, int numOfGuests, String bookingConfirmationCode) {
+        this.id = id;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.guestFullName = guestFullName;
+        this.numOfGuests = numOfGuests;
+        this.bookingConfirmationCode = bookingConfirmationCode;
+    }
+
+    public BookingResponse(String status){
+        this.status = status;
     }
 }

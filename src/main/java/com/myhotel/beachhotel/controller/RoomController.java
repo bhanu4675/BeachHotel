@@ -60,21 +60,6 @@ public class RoomController {
                 }
                 roomListResponse.add(roomResponse);
             }
-
-           /* for(int i=0; i< roomsList.size(); i++) {
-                //Room room = roomService.getRoomById(roomsList.get(i).getId());
-                byte[] photoBytes = roomService.getRoomPhotoById(roomsList.get(i).getId());
-                if (photoBytes != null || photoBytes.length > 0) {
-                    String base64Photo = Base64.getEncoder().encode(photoBytes).toString();
-                    roomResponse.setId(roomsList.get(i).getId());
-                    roomResponse.setRoomType(roomsList.get(i).getRoomType());
-                    roomResponse.setRoomPrice(roomsList.get(i).getRoomPrice());
-                    roomResponse.setPhoto(base64Photo);
-
-                }
-                roomListResponse.add(roomResponse);
-            }*/
-
         }
         return ResponseEntity.ok(roomListResponse);
     }

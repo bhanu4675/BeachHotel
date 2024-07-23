@@ -33,9 +33,6 @@ public class BookedRoom {
     @Column(name = "guest_PhoneNumber")
     private String guestPhoneNumber;
 
-    @Column(name = "guest_Address")
-    private String guestAddress;
-
     @Column(name = "Num_Of_Adults")
     private int numOfAdults;
 
