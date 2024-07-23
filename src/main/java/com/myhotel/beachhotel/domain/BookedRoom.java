@@ -6,9 +6,7 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
 public class BookedRoom {
 
@@ -48,6 +46,10 @@ public class BookedRoom {
     @JoinColumn(name = "room_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
+
+    public BookedRoom() {
+
+    }
 
 
     public void calculateTotalNumOfGuests() {

@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BookingRepository extends JpaRepository<BookedRoom, Long> {
 
-    BookedRoom getBookingByConfirmationCode(String bookingConfirmationCode);
+    BookedRoom getByBookingConfirmationCode(String bookingConfirmationCode);
 }

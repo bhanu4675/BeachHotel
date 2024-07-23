@@ -6,20 +6,25 @@ import com.myhotel.beachhotel.exception.InvalidBookingRequestException;
 import com.myhotel.beachhotel.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Qualifier("bookingService")
 public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private BookingRepository bookingRepository;
-    @Qualifier("roomService")
+
+
     @Autowired
     private RoomService roomService;
 
+    //@Qualifier("bookingService")
     @Autowired
+    @Lazy
     private BookingService bookingService;
 
 
@@ -73,6 +78,6 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookedRoom getBookingByConfirmationCode(String bookingConfirmationCode) {
-        return bookingRepository.getBookingByConfirmationCode(bookingConfirmationCode);
+        return bookingRepository.getByBookingConfirmationCode(bookingConfirmationCode);
     }
 }

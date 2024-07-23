@@ -8,9 +8,11 @@ import com.myhotel.beachhotel.response.RoomResponse;
 import com.myhotel.beachhotel.service.BookingService;
 import com.myhotel.beachhotel.service.RoomService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,13 +24,15 @@ import java.util.RandomAccess;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@RestController("/bookings")
-@AllArgsConstructor
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/bookings")
 public class BookingController {
 
     @Autowired
+    @Lazy
     private BookingService bookingService;
-    @Qualifier("roomService")
+
     @Autowired
     private RoomService roomService;
 
