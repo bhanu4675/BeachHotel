@@ -10,6 +10,8 @@ import com.myhotel.beachhotel.service.RoomService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -36,13 +38,15 @@ public class BookingController {
     @Autowired
     private RoomService roomService;
 
+    Logger logger = LoggerFactory.getLogger(BookingController.class);
+
     @PostMapping("/room/{roomId}/save-booking")
     public ResponseEntity<?> saveBooking(@PathVariable Long roomId,
                                          @RequestBody BookedRoom bookingRequest ){
         try {
             BookingResponse bookingResponse = new BookingResponse();
 
-
+            logger.info("Before entering saveRoom method");
             String confirmationCode = bookingService.saveRoom(roomId, bookingRequest);
 
             bookingResponse.setStatus("Your Booking has done successfully. Here is your booking confirmation code " + confirmationCode);

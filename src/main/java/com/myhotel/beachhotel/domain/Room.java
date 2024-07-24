@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.lang.Nullable;
 
 import java.math.BigDecimal;
 import java.sql.Blob;
@@ -26,6 +27,7 @@ public class Room {
     private boolean isBooked;
 
     @Lob
+    @Nullable
     private Blob photo;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY , cascade = CascadeType.ALL)

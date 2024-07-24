@@ -7,7 +7,8 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-@AllArgsConstructor
+@Getter
+@Setter
 public class BookedRoom {
 
     //private Long bookingId;
@@ -47,11 +48,9 @@ public class BookedRoom {
     @ManyToOne(fetch = FetchType.LAZY)
     private Room room;
 
-    public BookedRoom() {
+    public BookedRoom(){
 
     }
-
-
     public void calculateTotalNumOfGuests() {
         this.totalNumOfGuests = this.numOfAdults + this.numOfChildren;
     }
