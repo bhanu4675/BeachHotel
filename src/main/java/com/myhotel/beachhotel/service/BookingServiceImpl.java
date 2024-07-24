@@ -51,6 +51,7 @@ public class BookingServiceImpl implements BookingService {
                 throw new InvalidBookingRequestException("Room is not available. Please choose another one");
             }
         }
+        //save
         bookingRepository.save(bookingRequest);
 
         return bookingRequest.getBookingConfirmationCode();
